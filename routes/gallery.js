@@ -1,30 +1,49 @@
 const express = require(`express`);
 const router = express.Router();
 const Photo = require(`../db/models/Photo`);
+const handleError = require(`../utilities/handleError`);
 module.exports = router;
 
 
 router.route(`/:id`)
 .get((req, res) => {
-
+  return new Photo({ id: req.params.id })
+  .fetch()
+  .then((photo) => {
+    if (photo) {
+      return res.json(photo);
+    }
+    throw new Error(`Photo was not found`);
+  })
+  .catch((err) => {
+    handleError(err, res);
+  });
 })
 .put((req, res) => {
 
 })
 .delete((req, res) => {
-
+  return new Photo({ id: req.params.id })
+  .destroy({ require: true })
+  .then((success) => {
+    return res.redirect(`/`);
+  })
+  .catch((err) => {
+    handleError(err, res);
+  });
 });
 
 router.route(`/`)
 .post((req, res) => {
   let { author, link, description } = req.body;
+
   return new Photo({ author, link, description })
   .save()
   .then((photo) => {
     return res.json(photo);
   })
   .catch((err) => {
-    return res.status(400).json({ message: err.message });
+    handleError(err, res);
   });
 });
 

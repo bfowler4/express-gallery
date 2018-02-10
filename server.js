@@ -11,6 +11,10 @@ server.use(bodyParser.json());
 
 server.use(`/gallery`, galleryRoute);
 
+server.get(`/`, (req, res) => {
+  res.send(`heres a list of all the photos`);
+});
+
 server.listen(PORT, (err) => {
   console.log(`Server listening on port: ${PORT}`);
 });
