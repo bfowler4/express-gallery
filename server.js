@@ -2,6 +2,7 @@ const express = require(`express`);
 const server = express();
 const bodyParser = require(`body-parser`);
 const handlebars = require(`express-handlebars`);
+const methodOverride = require(`method-override`);
 
 const PORT = process.env.PORT || 8080;
 
@@ -12,6 +13,8 @@ server.set(`view engine`, `.hbs`);
 
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
+
+//server.use(`/gallery`, methodOverride(`_method`));
 
 server.use(`/gallery`, galleryRoute);
 

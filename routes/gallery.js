@@ -6,7 +6,7 @@ module.exports = router;
 
 router.route(`/new`)
 .get((req, res) => {
-  return res.render(`templates/photos/new`, {name: `testing 123`});
+  return res.render(`templates/photos/new`);
 });
 
 router.route(`/:id`)
