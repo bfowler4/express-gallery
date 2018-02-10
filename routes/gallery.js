@@ -15,7 +15,7 @@ router.route(`/:id`)
   .fetch()
   .then((photo) => {
     if (photo) {
-      return res.json(photo);
+      return res.render(`templates/photos/photo`, photo);
     }
     throw new Error(`Photo was not found`);
   })

@@ -3,6 +3,7 @@ const server = express();
 const bodyParser = require(`body-parser`);
 const handlebars = require(`express-handlebars`);
 const methodOverride = require(`method-override`);
+const Photo = require(`./db/models/Photo`);
 
 const PORT = process.env.PORT || 8080;
 
@@ -19,7 +20,14 @@ server.use(`/gallery/:id`, methodOverride(`_method`));
 server.use(`/gallery`, galleryRoute);
 
 server.get(`/`, (req, res) => {
-  res.send(`heres a list of all the photos`);
+  return Photo
+  .fetchAll()
+  .then((photos) => {
+    return res.render(`templates/photos/index`, {data: photos.models});
+  })
+  .catch((err) => {
+    return res.json({ message: err.message });
+  });
 });
 
 server.listen(PORT, (err) => {
