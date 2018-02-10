@@ -14,7 +14,7 @@ server.set(`view engine`, `.hbs`);
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 
-//server.use(`/gallery`, methodOverride(`_method`));
+server.use(`/gallery/:id`, methodOverride(`_method`));
 
 server.use(`/gallery`, galleryRoute);
 

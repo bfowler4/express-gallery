@@ -24,7 +24,14 @@ router.route(`/:id`)
   });
 })
 .put((req, res) => {
-
+  return new Photo({ id: req.params.id })
+  .save(req.body, { patch: true, require: true })
+  .then((success) => {
+    return res.redirect(`/gallery/${req.params.id}`);
+  })
+  .catch((err) => {
+    handleError(err, res);
+  });
 })
 .delete((req, res) => {
   return new Photo({ id: req.params.id })
@@ -53,5 +60,15 @@ router.route(`/`)
 
 router.route(`/:id/edit`)
 .get((req, res) => {
-
+  return new Photo({ id: req.params.id })
+  .fetch()
+  .then((photo) => {
+    if (photo) {
+      return res.render(`templates/photos/edit`, photo.attributes);
+    }
+    throw new Error(`Photo was not found`);
+  })
+  .catch((err) => {
+    handleError(err, res);
+  });
 });
