@@ -12,6 +12,7 @@ const galleryRoute = require(`./routes/gallery`);
 server.engine(`.hbs`, handlebars({ defaultLayout: `main`, extname: `.hbs` }));
 server.set(`view engine`, `.hbs`);
 
+server.use(express.static(`public`));
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 
