@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/bfowler4/express-gallery#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "bookshelf": "^0.12.1",
     "express": "^4.16.2",
     "knex": "^0.14.3",
