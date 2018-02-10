@@ -4,6 +4,10 @@ const Photo = require(`../db/models/Photo`);
 const handleError = require(`../utilities/handleError`);
 module.exports = router;
 
+router.route(`/new`)
+.get((req, res) => {
+  return res.render(`templates/photos/new`, {name: `testing 123`});
+});
 
 router.route(`/:id`)
 .get((req, res) => {
@@ -45,11 +49,6 @@ router.route(`/`)
   .catch((err) => {
     handleError(err, res);
   });
-});
-
-router.route(`/new`)
-.get((req, res) => {
-  return res.send(`this is a form to post a new photo`);
 });
 
 router.route(`/:id/edit`)
