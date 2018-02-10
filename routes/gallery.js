@@ -2,6 +2,7 @@ const express = require(`express`);
 const router = express.Router();
 const Photo = require(`../db/models/Photo`);
 const handleError = require(`../utilities/handleError`);
+const { validatePhotoForInsert } = require(`../utilities/validatePhoto`);
 module.exports = router;
 
 router.route(`/new`)
