@@ -22,8 +22,17 @@ server.use(`/gallery`, galleryRoute);
 
 server.get(`/`, (req, res) => {
   return Photo
+  .forge()
+  .orderBy(`id`, `ASC`)
   .fetchAll()
   .then((photos) => {
+    photos.models.slice(0, photos.models.length - 1).forEach((curr, index) => {
+      if ((index + 1) % 3 === 0) {
+        curr.attributes.addLine = true;
+      } else {
+        curr.attributes.addLine = false;
+      }
+    });
     return res.render(`templates/photos/index`, {data: photos.models});
   })
   .catch((err) => {

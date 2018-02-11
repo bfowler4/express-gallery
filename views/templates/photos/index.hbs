@@ -1,11 +1,17 @@
-<ol>
-  {{#each data}}
-  <li>Photo ID: {{attributes.id}}</li>
-  <ul>
-    <li>Author: {{attributes.author}}</li>
-    <li>Description: {{attributes.description}}</li>
-    <li>Link: <a href='{{attributes.link}}'>{{attributes.link}}</a></li>
-    <img src={{attributes.link}} alt='{{description}}'>
-  </ul>
-  {{/each}}
-</ol>
+<div class='listing'>
+  <div class='image_highlight_container'>
+    <img class='image_highlight' src='http://via.placeholder.com/725x300'>
+  </div>
+
+  <div class='listing_images_container'>
+    {{#each data}}
+      <div class='image_container'>
+        <img class='image_thumbnail' src={{attributes.link}} alt='{{description}}'>
+        <p>{{attributes.author}} ({{id}}) - {{attributes.description}}</p>
+      </div>
+      {{#if attributes.addLine}}
+        <div class='line_break'></div> 
+      {{/if}} 
+    {{/each}}
+  </div>
+</div>
