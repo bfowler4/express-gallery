@@ -20,6 +20,8 @@ const usersRoute = require(`./routes/users`);
 server.engine(`.hbs`, handlebars({ defaultLayout: `main`, extname: `.hbs` }));
 server.set(`view engine`, `.hbs`);
 
+server.use(`/gallery`, galleryRoute);
+
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 server.use(session({
@@ -35,7 +37,6 @@ server.use(passport.session());
 
 server.use(`/users/:user_id/:photo_id/edit`, methodOverride(`_method`));
 
-server.use(`/gallery`, galleryRoute);
 server.use(`/users`, usersRoute);
 
 server.get(`/`, (req, res) => {

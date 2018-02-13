@@ -1,0 +1,21 @@
+<div class='listing'>
+  <div class='listing_images_container'>
+    {{#each data}}
+      <div class='image_container'>
+        <img class='image_thumbnail' src={{link}} alt='{{description}}' data-id={{id}}>
+        <p>{{author}} ({{id}}) - {{description}}</p>
+        <div class='user_listing_icon_container'>
+          <a href='http://localhost:8080/users/{{user_id}}/{{id}}/edit'>
+            <img id='edit_icon' src='/assets/edit.svg' data-user_id={{id}} data-photo_id={{user_id}}>
+          </a>
+          <form action='/users/{{user_id}}/{{id}}/edit?_method=DELETE' method='POST'>
+            <input type='image' id='delete_icon' src='/assets/delete.svg' data-user_id={{id}} data-photo_id={{user_id}}>
+          </form>
+        </div>
+      </div>
+      {{#if addLine}}
+        <div class='line_break'></div> 
+      {{/if}} 
+    {{/each}}
+  </div>
+</div>

@@ -105,7 +105,15 @@ router.route(`/:user_id`)
   return new User({ id: req.params.user_id })
   .fetch({ withRelated: [`photos`] })
   .then((user) => {
-    return res.json(user);
+    user = user.toJSON();
+    user.photos.slice(0, user.photos.length - 1).forEach((curr, index) => {
+      if ((index + 1) % 3 === 0) {
+        curr.addLine = true;
+      } else {
+        curr.addLine = false;
+      }
+    });
+    return res.render(`templates/users/index`, { data: user.photos });
   })
   .catch((err) => {
     handleError(err, res);
@@ -117,7 +125,7 @@ router.route(`/:user_id`)
   return new Photo({ author, link, description, user_id: req.params.user_id })
   .save()
   .then((photo) => {
-    return res.json(photo);
+    return res.redirect(`/users/${req.params.user_id}`);
   })
   .catch((err) => {
     return handleError(err, res);

@@ -1,6 +1,34 @@
-<form action='/users/register' method='post'>
-  Email: <input type='text' name='email'><br>
-  Username: <input type='text' name='username'><br>
-  Password: <input type='text' name='password'><br>
-  <input type='submit' value='Submit'>
-</form>
+<div class='registration_container'>
+  <div class='title'>
+    <h2>Sign Up</h2>
+  </div>
+  <form action='/users/register' method='post'>
+    <div class='input_container'>
+      <div class='input_label'>
+        Email:
+      </div>
+      <div class='input_field'>
+        <input type='text' name='email'><br>
+      </div>
+    </div>
+    <div class='input_container'>
+      <div class='input_label'>
+        Username:
+      </div>
+      <div class='input_field'>
+        <input type='text' name='username'><br>
+      </div>
+    </div>
+    <div class='input_container'>
+      <div class='input_label'>
+        Password:
+      </div>
+      <div class='input_field'>
+        <input type='text' name='password'><br>
+      </div>
+    </div>
+    <div class='submit_container'>
+      <input type='submit' value='Submit'>
+    </div>
+  </form>
+</div>
