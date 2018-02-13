@@ -4,43 +4,105 @@ const User = require(`../db/models/User`);
 const Photo = require(`../db/models/Photo`);
 const handleError = require(`../utilities/handleError`);
 
+// Authentication modules
+const passport = require(`passport`);
+const LocalStrategy = require(`passport-local`);
+const bcrypt = require(`bcrypt`);
+const session = require(`express-session`);
+const Redis = require(`connect-redis`)(session);
+
+const saltRounds = 12;
+
 module.exports = router;
 
+
+// Passport setup
+passport.serializeUser((user, done) => {
+  console.log(`serializing`);
+  return done(null, {
+    id: user.id,
+    username: user.username
+  });
+});
+
+passport.deserializeUser((user, done) => {
+  console.log(`deserializing`);
+  return new User({ id: user.id })
+  .fetch()
+  .then((user) => {
+    user = user.toJSON();
+    return done(null, {
+      id: user.id,
+      username: user.username
+    });
+  });
+});
+
+passport.use(new LocalStrategy(function(username, password, done) {
+  new User({ username: username }).fetch()
+  .then((user) => {
+    if (user === null) {
+      return done(null, false, { message: `bad username or password` });
+    } else {
+      user = user.toJSON();
+      bcrypt.compare(password, user.password)
+      .then((res) => {
+        if (res) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: `bad username or password` });
+        }
+      });
+    }
+  })
+  .catch((err) => { console.log(`error: `, err); });
+}));
+
+
+// ROUTING
 // Get new user form and handle adding new user
 router.route(`/register`)
 .get((req, res) => {
   return res.render(`templates/users/register`);
 })
 .post((req, res) => {
-  let { email, username, password } = req.body;
-  return new User({ email, username, password})
-  .save()
-  .then((user) => {
-    return res.redirect(`/users/${user.attributes.id}`);
-  })
-  .catch((err) => {
-    return handleError(err, res);
+  bcrypt.genSalt(saltRounds, function(err, salt) {
+    bcrypt.hash(req.body.password, salt, function(err, hash) {
+      let { email, username } = req.body;
+      return new User({ email, username, password: hash })
+      .save()
+      .then((user) => {
+        return res.redirect(`/users/${user.attributes.id}`);
+      })
+      .catch((err) => { handleError(err, res); });
+    });
   });
 });
 
+// Login and logout
 router.route(`/login`)
 .get((req, res) => {
   return res.render(`templates/users/login`);
 })
-.post((req, res) => {
-  return res.json(req.body);
+.post(passport.authenticate(`local`, { failureRedirect: `/users/login` }), (req, res) => {
+  return res.redirect(`/users/${req._passport.session.user.id}`);
+});
+
+router.get(`/logout`, (req, res) => {
+  req.logout();
+  return res.redirect(`/`);
 });
 
 // Get form to add new photo
-router.route(`/:id/new`)
-.get((req, res) => {
-  return res.render(`templates/users/new`, { id: req.params.id });
+router.route(`/:user_id/new`)
+.get(isAuthenticated, (req, res) => {
+  return res.render(`templates/users/new`, { id: req.params.user_id });
 });
 
 // Get all photos from user and handle add photo request
-router.route(`/:id`)
-.get((req, res) => {
-  return new User({ id: req.params.id })
+router.route(`/:user_id`)
+.get(isAuthenticated, (req, res) => {
+  return new User({ id: req.params.user_id })
   .fetch({ withRelated: [`photos`] })
   .then((user) => {
     return res.json(user);
@@ -49,10 +111,10 @@ router.route(`/:id`)
     handleError(err, res);
   });
 })
-.post((req, res) => {
+.post(isAuthenticated, (req, res) => {
   let { author, link, description } = req.body;
 
-  return new Photo({ author, link, description, user_id: req.params.id })
+  return new Photo({ author, link, description, user_id: req.params.user_id })
   .save()
   .then((photo) => {
     return res.json(photo);
@@ -62,11 +124,10 @@ router.route(`/:id`)
   });
 });
 
-
 // Get form to edit photo, handle edit request and delete request
 router.route(`/:user_id/:photo_id/edit`)
-.get((req, res) => {
-  return new Photo({ id: req.params.photo_id })
+.get(isAuthenticated, (req, res) => {
+  return new Photo({ id: req.params.photo_id, user_id: req.params.user_id })
   .fetch()
   .then((photo) => {
     if (photo) {
@@ -78,8 +139,8 @@ router.route(`/:user_id/:photo_id/edit`)
     handleError(err, res);
   });
 })
-.put((req, res) => {
-  return new Photo({ id: req.params.photo_id })
+.put(isAuthenticated, (req, res) => {
+  return new Photo({ id: req.params.photo_id, user_id: req.params.user_id })
   .save(req.body, { path: true, require: true })
   .then((success) => {
     return res.redirect(`/users/${req.params.user_id}`);
@@ -88,8 +149,8 @@ router.route(`/:user_id/:photo_id/edit`)
     handleError(err, res);
   });
 })
-.delete((req, res) => {
-  return new Photo({ id: req.params.photo_id })
+.delete(isAuthenticated, (req, res) => {
+  return new Photo({ id: req.params.photo_id, user_id: req.params.user_id })
   .destroy({ require: true })
   .then((success) => {
     return res.redirect(`/users/${req.params.user_id}`);
@@ -98,3 +159,14 @@ router.route(`/:user_id/:photo_id/edit`)
     handleError(err, res);
   });
 });
+
+function isAuthenticated (req, res, next) {
+  if(req.isAuthenticated()) {
+    let sessionUserId = req._passport.session.user.id;
+    if (req.params.user_id == sessionUserId) {
+      return next();
+    }
+    return res.redirect(`/users/${sessionUserId}`);
+  }
+  return res.redirect('/'); 
+}
