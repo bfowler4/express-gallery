@@ -1,12 +1,13 @@
 <div class='listing'>
   <div class='image_highlight_container'>
-    <img class='image_highlight' src='http://via.placeholder.com/725x300'>
+    <img id='slideshow_image_1' class='image_highlight' src='http://via.placeholder.com/300x300'>
+    <img id='slideshow_image_2' class='image_highlight' src='http://via.placeholder.com/725x300'>
   </div>
 
   <div class='listing_images_container'>
     {{#each data}}
       <div class='image_container'>
-        <img class='image_thumbnail' src={{attributes.link}} alt='{{description}}'>
+        <img class='image_thumbnail' src={{attributes.link}} alt='{{description}}' data-id={{id}}>
         <p>{{attributes.author}} ({{id}}) - {{attributes.description}}</p>
       </div>
       {{#if attributes.addLine}}
@@ -15,3 +16,5 @@
     {{/each}}
   </div>
 </div>
+
+<script src='/js/slideshow.js'></script>

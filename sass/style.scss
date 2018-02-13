@@ -61,8 +61,20 @@ html, body {
     align-items: center;
 
     .image_highlight {
-      width: 100%;
+      width: 730px;
       height: 300px;
+      flex: 350px 1 0;
+      transition: opacity 1s ease-in;
+    }
+
+    #slideshow_image_1 {
+      opacity: 0;
+    }
+
+    #slideshow_image_2 {
+      display: none;
+      position: absolute;
+      opacity: 0;
     }
   }
 
@@ -96,5 +108,43 @@ html, body {
   .line_break {
     width: 100%;
     border-bottom: rgb(169, 169, 169) dotted 1px;
+  }
+}
+
+.detailed_view_container {
+  display: flex;
+  height: 100%;
+  padding-top: 70px;
+
+  .main_photo_container {
+    width: 57%;
+    display: flex;
+    flex-flow: column wrap;
+
+    .main_photo {
+      width: 390px;
+      height: 260px;
+    }
+
+    .main_photo_description {
+      width: 390px;
+    }
+  }
+
+  .side_photos_container {
+    width: 43%;
+
+    .image_container {
+      margin-bottom: 20px;
+
+      .image_thumbnail {
+        width: 313px;
+      }
+  
+      p {
+        margin: 0;
+      }
+    }
+
   }
 }

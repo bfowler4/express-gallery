@@ -12,17 +12,25 @@ router.route(`/new`)
 
 router.route(`/:id`)
 .get((req, res) => {
-  return new Photo({ id: req.params.id })
-  .fetch()
-  .then((photo) => {
+  return Photo
+  .forge()
+  .orderBy(`id`, `ASC`)
+  .fetchAll()
+  .then((photos) => {
+    let photo = findAndRemovePhoto(photos.models, req.params.id);
     if (photo) {
-      return res.render(`templates/photos/photo`, photo);
+      let photosObject = {};
+      photosObject.mainPhoto = photo.attributes;
+      photosObject.sidePhotos = photos.models;
+
+      return res.render(`templates/photos/photo`, photosObject);
+    } else {
+      throw new Error(`Photo was not found`);
     }
-    throw new Error(`Photo was not found`);
   })
   .catch((err) => {
     handleError(err, res);
-  });
+  })
 })
 .put((req, res) => {
   return new Photo({ id: req.params.id })
@@ -52,7 +60,7 @@ router.route(`/`)
   return new Photo({ author, link, description })
   .save()
   .then((photo) => {
-    return res.json(photo);
+    return res.redirect(`http://localhost:8080`);
   })
   .catch((err) => {
     handleError(err, res);
@@ -73,3 +81,15 @@ router.route(`/:id/edit`)
     handleError(err, res);
   });
 });
+
+function findAndRemovePhoto(photos, id) {
+  for (let i = 0; i < photos.length; i ++) {
+    if (photos[i].attributes.id == id) {
+      let photo = photos[i];
+      photos.splice(i, 1);
+      return photo;
+    }
+  }
+
+  return false;
+}

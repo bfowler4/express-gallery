@@ -1,15 +1,14 @@
-<ul>
-  <li>Photo ID: {{id}}</li>
-  <form action='/gallery/{{attributes.id}}/edit'>
-    <input type='submit' value='Edit'>
-  </form>
-  <form action='/gallery/{{attributes.id}}?_method=DELETE' method='POST'>
-    <input type='submit' value='Delete'>
-  </form>
-  <li>Author: {{attributes.author}}</li>
-  <li>Description: {{attributes.description}}</li>
-  <li>Link:
-    <a href='{{attributes.link}}'>{{attributes.link}}</a>
-  </li>
-  <img src={{attributes.link}} alt='{{description}}'>
-</ul>
+<div class='detailed_view_container'>
+  <div class='main_photo_container'>
+    <img class='main_photo' src={{mainPhoto.link}} alt='{{mainPhoto.description}}'>
+    <p class='main_photo_description'>{{mainPhoto.description}}</p>
+  </div>
+
+  <div class='side_photos_container'>
+    {{#each sidePhotos}}
+    <div class='image_container'>
+      <img class='image_thumbnail' src={{attributes.link}} alt='{{description}}'>
+      <p>{{attributes.author}} ({{id}}) - {{attributes.description}}</p>
+    </div>
+    {{/each}}
+  </div>
