@@ -1,3 +1,13 @@
+{{#if user}}
+  {{>userNav}}
+{{/if}}
+
+{{#unless user}}
+  {{>regularNav}}
+{{/unless}}
+
+{{>header}}
+
 <div class='registration_container'>
   <h1>Sign Up</h1>
 

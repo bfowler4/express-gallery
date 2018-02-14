@@ -1,3 +1,13 @@
+{{#if user}}
+  {{>userNav}}
+{{/if}}
+
+{{#unless user}}
+  {{>regularNav}}
+{{/unless}}
+
+{{>header}}
+
 <div class='detailed_view_container'>
   <div class='main_photo_container'>
     <img class='main_photo' src={{mainPhoto.link}} alt='{{mainPhoto.description}}'>

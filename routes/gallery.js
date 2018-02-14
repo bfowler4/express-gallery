@@ -18,6 +18,7 @@ router.route(`/:id`)
       let photosObject = {};
       photosObject.mainPhoto = photo.attributes;
       photosObject.sidePhotos = photos.models;
+      photosObject.user = req.user;
 
       return res.render(`templates/photos/photo`, photosObject);
     } else {

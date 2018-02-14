@@ -63,7 +63,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
 // Get new user form and handle adding new user
 router.route(`/register`)
 .get((req, res) => {
-  return res.render(`templates/users/register`);
+  return res.render(`templates/users/register`, { user: req.user });
 })
 .post((req, res) => {
   bcrypt.genSalt(saltRounds, function(err, salt) {
@@ -72,7 +72,7 @@ router.route(`/register`)
       return new User({ email, username, password: hash })
       .save()
       .then((user) => {
-        return res.redirect(`/users/${user.attributes.id}`);
+        return res.redirect(`/users/login`);
       })
       .catch((err) => { handleError(err, res); });
     });
@@ -82,6 +82,9 @@ router.route(`/register`)
 // Login and logout
 router.route(`/login`)
 .get((req, res) => {
+  if (req.user) {
+    req.logout();
+  }
   return res.render(`templates/users/login`);
 })
 .post(passport.authenticate(`local`, { failureRedirect: `/users/login` }), (req, res) => {

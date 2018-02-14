@@ -20,8 +20,6 @@ const usersRoute = require(`./routes/users`);
 server.engine(`.hbs`, handlebars({ defaultLayout: `main`, extname: `.hbs` }));
 server.set(`view engine`, `.hbs`);
 
-server.use(`/gallery`, galleryRoute);
-
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
 server.use(session({
@@ -39,6 +37,9 @@ server.use(`/users/:user_id/:photo_id/edit`, methodOverride(`_method`));
 
 server.use(`/users`, usersRoute);
 
+server.use(`/gallery`, galleryRoute);
+
+
 server.get(`/`, (req, res) => {
   return Photo
   .forge()
@@ -52,7 +53,7 @@ server.get(`/`, (req, res) => {
         curr.attributes.addLine = false;
       }
     });
-    return res.render(`templates/photos/index`, {data: photos.models});
+    return res.render(`templates/photos/index`, { data: photos.models, user: req.user });
   })
   .catch((err) => {
     return res.json({ message: err.message });
