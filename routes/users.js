@@ -148,6 +148,7 @@ router.route(`/:user_id/:photo_id/edit`)
   });
 })
 .put(isAuthenticated, (req, res) => {
+  req.body.description = req.body.description.replace(/[\r\n]+/g, ` `);
   return new Photo({ id: req.params.photo_id, user_id: req.params.user_id })
   .save(req.body, { path: true, require: true })
   .then((success) => {

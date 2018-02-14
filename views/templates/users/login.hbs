@@ -1,5 +1,10 @@
-<form action='/users/login' method='post'>
-  username: <input type='text' name='username'><br>
-  password: <input type='password' name='password'><br>
-  <input type='submit' value='Submit'>
-</form>
+<div class='login_container'>
+  <h1>Login</h1>
+  <form action='/users/login' method='post'>
+    <input type='text' name='username' placeholder='Username' required autofocus><br>
+    <input type='password' name='password' placeholder='Password' required><br>
+    <div class='submit_container'>
+      <input type='submit' value='Login'>
+    </div>
+  </form> 
+</div>

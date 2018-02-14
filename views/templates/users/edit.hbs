@@ -1,8 +1,22 @@
-<h1>Photo ID: {{id}}</h1>
-
-<form action='/users/{{user_id}}/{{id}}/edit?_method=PUT' method='POST'>
-  Author: <input type='text' name='author' value='{{author}}'><br>
-  Link: <input type='text' name='link' value='{{link}}'><br>
-  Description: <input type='text' name='description' value='{{description}}'><br>
-  <input type='submit' value='Submit'>
-</form>
+<div class='edit_container'>
+  <img class='edit_image' src={{link}}>
+  <div class='edit_form_container'>
+    <form action='/users/{{user_id}}/{{id}}/edit?_method=PUT' method='POST'>
+      <div class='form_input_container'>
+        <p>Author: </p>
+        <input id='author_input_field' type='text' name='author' value='{{author}}' autofocus required>
+      </div>
+      <div class='form_input_container'> 
+        <p>Link: </p>
+        <input id='link_input_field' type='text' name='link' value='{{link}}' required>
+      </div>
+      <div class='form_input_container'>
+        <p>Description: </p>
+        <textarea id='description_input_field' name='description' required>{{description}}</textarea>
+      </div>
+      <div class='submit_container'>
+        <input type='submit' value='Submit'>
+      </div>
+    </form>
+  </div>
+</div>
