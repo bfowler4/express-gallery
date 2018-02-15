@@ -151,7 +151,8 @@ html, body {
         justify-content: center; }
         .listing .listing_images_container .image_container .user_listing_icon_container #edit_icon, .listing .listing_images_container .image_container .user_listing_icon_container #delete_icon {
           width: 25px;
-          height: 25px; }
+          height: 25px;
+          margin-top: 5px; }
         .listing .listing_images_container .image_container .user_listing_icon_container #edit_icon {
           margin-right: 25px; }
         .listing .listing_images_container .image_container .user_listing_icon_container #delete_icon {

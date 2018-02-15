@@ -66,6 +66,9 @@ router.route(`/register`)
   return res.render(`templates/users/register`, { user: req.user });
 })
 .post((req, res) => {
+  if (req.body.password !== req.body.password_confirmation) {
+    return res.redirect(`/users/register`);
+  }
   bcrypt.genSalt(saltRounds, function(err, salt) {
     bcrypt.hash(req.body.password, salt, function(err, hash) {
       let { email, username } = req.body;
