@@ -201,7 +201,7 @@ html, body {
     .edit_container .form_container .form_input_container, .new_photo_container .form_container .form_input_container {
       display: flex;
       justify-content: space-between; }
-      .edit_container .form_container .form_input_container #author_input_field, .edit_container .form_container .form_input_container #link_input_field, .new_photo_container .form_container .form_input_container #author_input_field, .new_photo_container .form_container .form_input_container #link_input_field {
+      .edit_container .form_container .form_input_container #author_input_field, .edit_container .form_container .form_input_container #link_input_field, .edit_container .form_container .form_input_container #title_input_field, .new_photo_container .form_container .form_input_container #author_input_field, .new_photo_container .form_container .form_input_container #link_input_field, .new_photo_container .form_container .form_input_container #title_input_field {
         width: 250px;
         height: 40px;
         padding-left: 10px;
@@ -210,7 +210,7 @@ html, body {
         margin-bottom: 15px;
         border: none;
         background-color: #eee9e1; }
-        .edit_container .form_container .form_input_container #author_input_field:focus, .edit_container .form_container .form_input_container #link_input_field:focus, .new_photo_container .form_container .form_input_container #author_input_field:focus, .new_photo_container .form_container .form_input_container #link_input_field:focus {
+        .edit_container .form_container .form_input_container #author_input_field:focus, .edit_container .form_container .form_input_container #link_input_field:focus, .edit_container .form_container .form_input_container #title_input_field:focus, .new_photo_container .form_container .form_input_container #author_input_field:focus, .new_photo_container .form_container .form_input_container #link_input_field:focus, .new_photo_container .form_container .form_input_container #title_input_field:focus {
           box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
           outline: none; }
       .edit_container .form_container .form_input_container #description_input_field, .new_photo_container .form_container .form_input_container #description_input_field {

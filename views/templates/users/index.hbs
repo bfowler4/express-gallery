@@ -7,7 +7,7 @@
     {{#each data}}
       <div class='image_container'>
         <img class='image_thumbnail' src={{link}} alt='{{description}}' data-id={{id}}>
-        <p>{{author}} ({{id}}) - {{description}}</p>
+        <p>{{title}} - {{description}}</p>
         <div class='user_listing_icon_container'>
           <a href='http://localhost:8080/users/{{user_id}}/{{id}}/edit'>
             <img id='edit_icon' src='/assets/edit.svg' data-user_id={{id}} data-photo_id={{user_id}}>

@@ -6,8 +6,12 @@
   <div class='form_container'>
     <form action='/users/{{id}}' method='POST'>
       <div class='form_input_container'>
+        <p>Title: </p>
+        <input id='title_input_field' type='text' name='title' autofocus>
+      </div>
+      <div class='form_input_container'>
         <p>Author: </p>
-        <input id='author_input_field' type='text' name='author' autofocus required>
+        <input id='author_input_field' type='text' name='author' required>
       </div>
       <div class='form_input_container'> 
         <p>Link: </p>
