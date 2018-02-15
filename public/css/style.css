@@ -13,16 +13,44 @@ html, body {
 
 .nav_bar {
   display: flex;
+  position: absolute;
   flex-flow: row;
   justify-content: flex-end;
-  margin: 5px 0;
-  width: 100%; }
-  .nav_bar span {
-    margin: 0 10px; }
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  background-color: #7F7F7F; }
+  .nav_bar img {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px; }
+  .nav_bar .drop_down {
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    background-color: #7F7F7F;
+    width: 120px;
+    margin-top: 50px;
+    border-bottom-left-radius: 18px; }
+  .nav_bar a {
+    text-decoration: none;
+    margin-right: 15px;
+    margin-top: 5px;
+    color: #e6e0d6; }
+  .nav_bar a:hover {
+    color: white; }
+  .nav_bar a:last-child {
+    margin-bottom: 10px; }
+  .nav_bar img:hover ~ .drop_down {
+    display: flex; }
+  .nav_bar .drop_down:hover {
+    display: flex; }
 
 .header {
   display: flex;
-  border-top: 1px #b0b0b0 dotted; }
+  border-top: 1px #b0b0b0 dotted;
+  margin-top: 60px; }
   .header .title {
     width: 57%;
     display: flex;
@@ -61,6 +89,8 @@ html, body {
     padding-left: 15px;
     font-size: 1em;
     background-color: #eee9e1; }
+    .login_container input[type=text]:focus, .login_container input[type=password]:focus, .registration_container input[type=text]:focus, .registration_container input[type=password]:focus {
+      box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2); }
   .login_container .submit_container, .registration_container .submit_container {
     display: flex;
     justify-content: center; }
@@ -154,24 +184,24 @@ html, body {
       .detailed_view_container .side_photos_container .image_container p {
         margin: 0; }
 
-.edit_container {
+.edit_container, .new_photo_container {
   display: flex;
   flex-flow: column;
   align-items: center;
   margin-top: 60px;
   width: 500px; }
-  .edit_container img {
+  .edit_container img, .new_photo_container img {
     width: 500px;
     max-height: 350px; }
-  .edit_container .edit_form_container {
+  .edit_container .form_container, .new_photo_container .form_container {
     margin-top: 15px;
     width: 375px; }
-    .edit_container .edit_form_container form {
+    .edit_container .form_container form, .new_photo_container .form_container form {
       width: 100%; }
-    .edit_container .edit_form_container .form_input_container {
+    .edit_container .form_container .form_input_container, .new_photo_container .form_container .form_input_container {
       display: flex;
       justify-content: space-between; }
-      .edit_container .edit_form_container .form_input_container #author_input_field, .edit_container .edit_form_container .form_input_container #link_input_field {
+      .edit_container .form_container .form_input_container #author_input_field, .edit_container .form_container .form_input_container #link_input_field, .new_photo_container .form_container .form_input_container #author_input_field, .new_photo_container .form_container .form_input_container #link_input_field {
         width: 250px;
         height: 40px;
         padding-left: 10px;
@@ -179,11 +209,11 @@ html, body {
         margin-left: 5px;
         margin-bottom: 15px;
         border: none;
-        background-color: #eee9e1;
-        box-shadow: 0 0 2px 4px rgba(0, 0, 0, 0.1); }
-        .edit_container .edit_form_container .form_input_container #author_input_field:focus, .edit_container .edit_form_container .form_input_container #link_input_field:focus {
-          box-shadow: 0 0 2px 4px rgba(0, 0, 0, 0.2); }
-      .edit_container .edit_form_container .form_input_container #description_input_field {
+        background-color: #eee9e1; }
+        .edit_container .form_container .form_input_container #author_input_field:focus, .edit_container .form_container .form_input_container #link_input_field:focus, .new_photo_container .form_container .form_input_container #author_input_field:focus, .new_photo_container .form_container .form_input_container #link_input_field:focus {
+          box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+          outline: none; }
+      .edit_container .form_container .form_input_container #description_input_field, .new_photo_container .form_container .form_input_container #description_input_field {
         width: 250px;
         height: 100px;
         border-radius: 18px;
@@ -192,15 +222,19 @@ html, body {
         padding-top: 10px;
         background-color: #eee9e1;
         margin-bottom: 15px; }
-      .edit_container .edit_form_container .form_input_container input:focus, .edit_container .edit_form_container .form_input_container textarea:focus {
-        outline: none; }
-    .edit_container .edit_form_container .submit_container {
+        .edit_container .form_container .form_input_container #description_input_field:focus, .new_photo_container .form_container .form_input_container #description_input_field:focus {
+          box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+          outline: none; }
+    .edit_container .form_container .submit_container, .new_photo_container .form_container .submit_container {
       display: flex;
-      justify-content: center; }
-      .edit_container .edit_form_container .submit_container input[type=submit] {
+      justify-content: center;
+      margin-bottom: 10px; }
+      .edit_container .form_container .submit_container input[type=submit], .new_photo_container .form_container .submit_container input[type=submit] {
         width: 100px;
         border-radius: 20px;
         height: 40px;
         color: white;
         background-color: rgba(0, 0, 0, 0.89);
         margin-top: 5px; }
+        .edit_container .form_container .submit_container input[type=submit]:focus, .new_photo_container .form_container .submit_container input[type=submit]:focus {
+          outline: none; }

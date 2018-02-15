@@ -16,9 +16,9 @@
 
   <div class='side_photos_container'>
     {{#each sidePhotos}}
-    <div class='image_container'>
-      <img class='image_thumbnail' src={{attributes.link}} alt='{{description}}'>
-      <p>{{attributes.author}} ({{id}}) - {{attributes.description}}</p>
-    </div>
+      <div class='image_container'>
+        <img class='image_thumbnail' src={{attributes.link}} alt='{{description}}'>
+        <p>{{attributes.author}} ({{id}}) - {{attributes.description}}</p>
+      </div>
     {{/each}}
   </div>

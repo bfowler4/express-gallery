@@ -124,6 +124,7 @@ router.route(`/:user_id`)
 })
 .post(isAuthenticated, (req, res) => {
   let { author, link, description } = req.body;
+  req.body.description = req.body.description.replace(/[\r\n]+/g, ` `);
 
   return new Photo({ author, link, description, user_id: req.params.user_id })
   .save()

@@ -2,9 +2,24 @@
 
 {{>header}}
 
-<form action='/users/{{id}}' method='post'>
-  Author: <input type='text' name='author'><br>
-  Link: <input type='text' name='link'><br>
-  Description: <input type='text' name='description'><br>
-  <input type='submit' value='Submit'>
-</form>
+<div class='new_photo_container'>
+  <div class='form_container'>
+    <form action='/users/{{id}}' method='POST'>
+      <div class='form_input_container'>
+        <p>Author: </p>
+        <input id='author_input_field' type='text' name='author' autofocus required>
+      </div>
+      <div class='form_input_container'> 
+        <p>Link: </p>
+        <input id='link_input_field' type='text' name='link' required>
+      </div>
+      <div class='form_input_container'>
+        <p>Description: </p>
+        <textarea id='description_input_field' name='description' required></textarea>
+      </div>
+      <div class='submit_container'>
+        <input type='submit' value='Submit'>
+      </div>
+    </form>
+  </div>
+</div>
